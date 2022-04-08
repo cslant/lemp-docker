@@ -1,0 +1,4 @@
+.idea
+sources/*.log
+docker/server/certs/*
+docker/logs/nginx/*.log
