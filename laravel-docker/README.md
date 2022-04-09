@@ -17,4 +17,14 @@ docker-compose run server php artisan key:generate
 - run `docker ps` to check the Container ID of **APP_NAME-db**
 - run the command `docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' <container ID>`
 
+## Redis
 
+```
+docker exec -it <container_name> bash
+```
+
+And then run:
+
+```
+
+```

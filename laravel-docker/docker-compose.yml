@@ -23,7 +23,6 @@ services:
   nginx:
     image: nginx:alpine
     container_name: '${APP_NAME}-nginx'
-    restart: unless-stopped
     tty: true
     ports:
       - '${APP_PORT}:80'
@@ -32,6 +31,7 @@ services:
       - ./docker/config/nginx/:/etc/nginx/conf.d/
       - ./docker/config/docker-entroypoint.sh:/docker/docker-entroypoint.sh
       - ./docker/logs/nginx:/var/log/nginx/
+      - ./docker/server/certs:/var/www/certs/
       - ./sources:/var/www/html/
     environment:
       - 'DATABASE_URL=mysql://${MYSQL_USER}:${MYSQL_PASS}@db_server:3306/${MYSQL_DB}'
