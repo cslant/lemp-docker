@@ -2,18 +2,30 @@ FROM php:7.4-fpm
 
 RUN apt-get update && apt-get install -y git unzip zip nano
 
+WORKDIR /var/www/html
+
 RUN apt-get update && apt-get install -y \
     libmcrypt-dev \
     openssl \
-    curl \
     vim cron \
     --no-install-recommends \
     && rm -r /var/lib/apt/lists/*
+
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libpng-dev \
+    libjpeg62-turbo-dev \
+    libfreetype6-dev \
+    locales \
+    jpegoptim optipng pngquant gifsicle \
+    curl
 
 RUN docker-php-ext-install -j$(nproc) \
     bcmath \
     pdo_mysql \
     tokenizer
+
+RUN docker-php-ext-configure gd --with-gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ --with-png-dir=/usr/include/
 
 # Install PHP Xdebug 2.9.8
 RUN pecl install -o xdebug-2.9.8
@@ -25,17 +37,19 @@ RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
     && npm install -g n \
     && n stable
 
-WORKDIR /var/www/sources
+RUN apt--get clean && rm -rf /var/lib/apt/lists/*
 
 COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
-RUN install-php-extensions gd pdo_mysql bcmath zip intl opcache mbstring exif
+RUN install-php-extensions gd pdo_mysql bcmath zip intl opcache mbstring exif pcntl
 
+# Install composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# RUN ["chmod", "+x", "/docker/docker-entroypoint.sh"]
+RUN ["chmod", "+x", "/docker/docker-entroypoint.sh"]
 
-# ENTRYPOINT [ "/docker/docker-entroypoint.sh" ]
-
-CMD ["php-fpm"]
+ENTRYPOINT [ "/docker/docker-entroypoint.sh" ]
 
 EXPOSE 80
 EXPOSE 443
+
+CMD ["php-fpm"]

@@ -1,7 +1,16 @@
 ## Steps
 
+- Add laravel source
+
 - modify **.env**
-- run `docker-compose up -d`
+
+- run 
+```
+docker-compose up -d
+docker-compose run server composer install
+docker-compose run server cp .env.example .env
+docker-compose run server php artisan key:generate
+```
 
 ## Check the network ID of DB
 

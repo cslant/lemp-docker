@@ -4,6 +4,8 @@ networks:
   nginx-laravel:
 
 services:
+
+  #PHP service
   server:
     build:
       context: .
@@ -12,31 +14,39 @@ services:
     working_dir: /var/www/html/
     volumes:
       - ./sources:/var/www/html/
+      - ./docker/server/php/php.ini:/usr/local/etc/php/conf.d/extra-php-config.ini
+      - ./docker/server/php/php-xdebug.ini:/usr/local/etc/php/conf.d/zz-xdebug-settings.ini
     networks:
       - nginx-laravel
 
+  #nginx service
   nginx:
-    image: nginx:latest
+    image: nginx:alpine
     container_name: '${APP_NAME}-nginx'
+    restart: unless-stopped
+    tty: true
     ports:
       - '${APP_PORT}:80'
       - '${SSL_PORT}:443'
     volumes:
-      - ./docker/config/nginx/default.conf:/etc/nginx/conf.d/default.conf
-      - ./docker/server/php/php.ini:/usr/local/etc/php/conf.d/extra-php-config.ini
-      - ./docker/server/php/php-xdebug.ini:/usr/local/etc/php/conf.d/zz-xdebug-settings.ini
+      - ./docker/config/nginx/:/etc/nginx/conf.d/
       - ./docker/config/docker-entroypoint.sh:/docker/docker-entroypoint.sh
       - ./docker/logs/nginx:/var/log/nginx/
       - ./sources:/var/www/html/
+    environment:
+      - 'DATABASE_URL=mysql://${MYSQL_USER}:${MYSQL_PASS}@db_server:3306/${MYSQL_DB}'
+    depends_on:
+      - server
+      - db_server
     networks:
       - nginx-laravel
+
+  #DB service
   db_server:
     image: mariadb
     container_name: '${APP_NAME}-db'
     command: --default-authentication-plugin=mysql_native_password
     restart: 'always'
-    cap_add:
-      - SYS_NICE
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: 'false'
       MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASS}'
@@ -44,11 +54,15 @@ services:
       MYSQL_PASSWORD: '${MYSQL_PASS}'
       MYSQL_DATABASE: '${MYSQL_DB}'
     volumes:
-      - ./docker/mysql:/var/lib/mysql
+      - db_data:/var/lib/mysql
       - ./docker/db/mariadb/my.cnf:/etc/mysql/conf.d/mysql.cnf
       - ./docker/logs/db/query.log:/var/log/query.log
     ports:
       - '${DB_PORT}:3306'
+    healthcheck:
+      test: mysqladmin ping -h ${IP_DB_SERVER} -u root --password=$$MYSQL_ROOT_PASSWORD
+      interval: 5s
+      retries: 5
     networks:
       - nginx-laravel
   phpmyadmin:
