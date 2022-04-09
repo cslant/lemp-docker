@@ -3,4 +3,3 @@ sources/*.log
 docker/server/certs/*
 docker/logs/nginx/*.log
 docker/logs/db/*.log
-sources
