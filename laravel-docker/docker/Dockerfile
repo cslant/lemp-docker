@@ -42,6 +42,7 @@ RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
+COPY ./docker/config/docker-entroypoint.sh /docker/docker-entroypoint.sh
 RUN ["chmod", "+x", "/docker/docker-entroypoint.sh"]
 
 ENTRYPOINT [ "/docker/docker-entroypoint.sh" ]

@@ -29,7 +29,6 @@ services:
       - '${SSL_PORT}:443'
     volumes:
       - ./docker/config/nginx/:/etc/nginx/conf.d/
-      - ./docker/config/docker-entroypoint.sh:/docker/docker-entroypoint.sh
       - ./docker/logs/nginx:/var/log/nginx/
       - ./docker/server/certs:/var/www/certs/
       - ./sources:/var/www/html/
