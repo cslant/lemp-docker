@@ -25,7 +25,9 @@ RUN docker-php-ext-install -j$(nproc) \
     pdo_mysql \
     tokenizer
 
-RUN docker-php-ext-configure gd --with-gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ --with-png-dir=/usr/include/
+
+COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
+RUN install-php-extensions gd pdo_mysql bcmath zip intl opcache mbstring exif pcntl
 
 # Install PHP Xdebug 2.9.8
 RUN pecl install -o xdebug-2.9.8
@@ -36,11 +38,6 @@ RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
     && apt-get install -y nodejs \
     && npm install -g n \
     && n stable
-
-RUN apt--get clean && rm -rf /var/lib/apt/lists/*
-
-COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
-RUN install-php-extensions gd pdo_mysql bcmath zip intl opcache mbstring exif pcntl
 
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer

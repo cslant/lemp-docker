@@ -80,6 +80,7 @@ services:
     container_name: redis_${APP_NAME}
     hostname: redis
     restart: 'on-failure'
-
+    ports:
+      - '${REDIS_PORT}:6379'
 volumes:
   db_data:
