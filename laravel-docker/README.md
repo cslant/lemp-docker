@@ -2,7 +2,7 @@
 
 This is a simple Docker Compose workflow that sets up a LEMP network of containers for local Laravel development
 
-## Configuration requirements
+## I. Configuration requirements
 
 To use the fpm image, you need an additional web server, such as nginx, that can proxy http-request to the fpm-port of the container. For fpm connection this container exposes port 9000.
 
@@ -12,7 +12,7 @@ To use the fpm image, you need an additional web server, such as nginx, that can
  - In-memory database: Redis
  - SSL Certificate (using mkcert)
  
-## Steps
+## II. Steps
 
 ### 1. Install ssl certificate
 Using mkcert to create ssl certificate
@@ -61,7 +61,7 @@ DB_USERNAME=root
 DB_PASSWORD=root
 ```
 
-## Check the network ID and connect Database
+## III. Check the network ID and connect Database
 
 ### 1. Check CONTAINER ID
 - Run `docker ps` to check the Container ID of **APP_NAME-db**
