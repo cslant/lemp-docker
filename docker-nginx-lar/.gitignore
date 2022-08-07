@@ -3,4 +3,4 @@ sources/*.log
 docker/server/certs/*.pem
 docker/logs/nginx/*.log
 docker/logs/db/*.log
-sources
+.vscode
