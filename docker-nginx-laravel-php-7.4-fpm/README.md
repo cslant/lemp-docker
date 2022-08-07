@@ -7,6 +7,7 @@ This is a simple Docker Compose workflow that sets up a LEMP network of containe
 To use the fpm image, you need an additional web server, such as nginx, that can proxy http-request to the fpm-port of the container. For fpm connection this container exposes port 9000.
 
  - Web-server: Nginx
+ - PHP Version: 7.4
  - DBMS (database management system): mariadb
  - PHP Framework: Laravel
  - In-memory database: Redis
