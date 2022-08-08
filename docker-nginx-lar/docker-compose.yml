@@ -13,7 +13,7 @@ services:
     container_name: '${APP_NAME}-server'
     working_dir: /var/www/html/
     volumes:
-      - ./sources:/var/www/html
+      - ./sources/cms-laravel:/var/www/html
       - ./docker/server/php/php.ini:/usr/local/etc/php/conf.d/extra-php-config.ini
       - ./docker/server/php/php-xdebug.ini:/usr/local/etc/php/conf.d/zz-xdebug-settings.ini
     networks:
