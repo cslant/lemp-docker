@@ -13,7 +13,7 @@ services:
     container_name: '${APP_NAME}-server'
     working_dir: /var/www/html/
     volumes:
-      - ./sources:/var/www/html
+      - ./sources/cms-laravel:/var/www/html
       - ./docker/server/php/php.ini:/usr/local/etc/php/conf.d/extra-php-config.ini
       - ./docker/server/php/php-xdebug.ini:/usr/local/etc/php/conf.d/zz-xdebug-settings.ini
     networks:
@@ -31,7 +31,7 @@ services:
       - ./docker/config/conf.d/:/etc/nginx/conf.d/
       - ./docker/logs/nginx:/var/log/nginx/
       - ./docker/server/certs:/var/www/certs/
-      - ./sources:/var/www/html
+      - ./sources/cms-laravel:/var/www/html
       - ./docker/config/nginx.conf:/etc/nginx/nginx.conf
     environment:
       - 'DATABASE_URL=mysql://${MYSQL_USER}:${MYSQL_PASS}@db_server:3306/${MYSQL_DB}'
