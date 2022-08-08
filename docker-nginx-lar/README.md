@@ -9,7 +9,7 @@ To use the fpm image, you need an additional web server, such as nginx, that can
  - Web-server: Nginx
  - PHP Version: 8.1
  - DBMS (database management system): mariadb
- - PHP Framework: Laravel
+ - PHP Framework: Laravel 9.x
  - In-memory database: Redis
  - SSL Certificate (using mkcert)
  
@@ -87,4 +87,5 @@ DB_USERNAME=root
 DB_PASSWORD=root
 ```
 ## This is the demo of the result:
-![image](https://user-images.githubusercontent.com/35853002/162612441-0084d99f-bd24-4c4c-8f50-350f642bab50.png)
+![image](https://user-images.githubusercontent.com/35853002/183320614-fa670785-9aa7-411a-a1ff-15e349cee58d.png)
+
