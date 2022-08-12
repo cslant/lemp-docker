@@ -41,7 +41,7 @@ Run:
 
 ```shell
 cd docker/server/certs
-mkcert purechironotes.docker.local
+mkcert cmslaravel.local
 ```
 
 ### 3. Run to setup: 
@@ -57,7 +57,7 @@ docker-compose run server php artisan key:generate
 ### 4. Modify **.env** on laravel source
 
 ```shell
-DB_DATABASE=laravel-docker
+DB_DATABASE=laravel-cms
 DB_USERNAME=root
 DB_PASSWORD=root
 ```
@@ -82,7 +82,7 @@ Example:
 DB_CONNECTION=mysql
 DB_HOST=172.21.0.3
 DB_PORT=3306
-DB_DATABASE=laravel-docker
+DB_DATABASE=laravel-cms
 DB_USERNAME=root
 DB_PASSWORD=root
 ```
