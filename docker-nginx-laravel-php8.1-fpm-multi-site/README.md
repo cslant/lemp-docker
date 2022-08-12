@@ -42,7 +42,8 @@ Run:
 
 ```shell
 cd docker/server/certs
-mkcert purechironotes.docker.local
+mkcert blog-site.local
+mkcert cmslaravel.local
 ```
 
 ### 3. Run to setup: 
@@ -58,7 +59,7 @@ docker-compose run server php artisan key:generate
 ### 4. Modify **.env** on laravel source
 
 ```shell
-DB_DATABASE=laravel-docker
+DB_DATABASE=laravel-cms
 DB_USERNAME=root
 DB_PASSWORD=root
 ```
@@ -83,10 +84,17 @@ Example:
 DB_CONNECTION=mysql
 DB_HOST=172.21.0.3
 DB_PORT=3306
-DB_DATABASE=laravel-docker
+DB_DATABASE=laravel-cms
 DB_USERNAME=root
 DB_PASSWORD=root
 ```
 ## This is the demo of the result:
 ![image](https://user-images.githubusercontent.com/35853002/183320614-fa670785-9aa7-411a-a1ff-15e349cee58d.png)
 
+## Add database for second project (When use multiple sites)
+
+What was instructed above can only be applied and created a database for cmslaravel.local
+
+For __blog-site.local__ to work, you need to create a new database for it.
+
+Please add new database for blog-site.local with the __phpmyadmin__ tool. And then, please update __DB_HOST__ on __.env__ file to the new database of __blog-site__ source.
