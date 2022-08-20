@@ -29,6 +29,10 @@ sudo chmod +x mkcert && \
 sudo cp mkcert /usr/local/bin/
 ```
 
+#### For Mac or Windows
+
+Please check and install mkcert at: https://github.com/FiloSottile/mkcert
+
 Now that the mkcert utility is installed, run the command below to generate and install your local CA:
 
 ```shell
