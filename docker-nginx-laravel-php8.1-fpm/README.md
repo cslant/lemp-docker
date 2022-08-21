@@ -73,7 +73,7 @@ DB_PASSWORD=root
 - Run the command `docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' <container ID>`
 
 ```shell
-docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}
+docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' 
 ```
 
 ![image](https://imgur.com/eXqHQVb.png)
