@@ -81,5 +81,7 @@ services:
     restart: 'on-failure'
     ports:
       - '${REDIS_PORT}:6379'
+    networks:
+      - nginx-laravel
 volumes:
   db_data:
