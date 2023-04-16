@@ -1,3 +1,3 @@
 <?php
-echo 'lamp';
+echo 'LEMP Stack is working';
 phpinfo();
