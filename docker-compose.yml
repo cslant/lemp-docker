@@ -10,6 +10,7 @@ services:
       context: .
       dockerfile: ./docker/Dockerfile
       args:
+          - PHP_VERSION_SELECTED=${PHP_VERSION_SELECTED}
           - PHP_VERSION=${PHP_VERSION_SELECTED}
     container_name: '${APP_NAME}-server'
     working_dir: /var/www/
