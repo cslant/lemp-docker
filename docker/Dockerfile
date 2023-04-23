@@ -49,33 +49,7 @@ COPY --from=composer/composer /usr/bin/composer /usr/local/bin/composer
 COPY ./docker/bash /docker/bash
 RUN chmod 755 /docker/bash
 
-RUN case "$PHP_VERSION" in \
-  7.1) \
-    bash /docker/bash/php/php7.1.sh \
-    ;; \
-  7.2) \
-    bash /docker/bash/php/php7.2.sh \
-    ;; \
-  7.3) \
-    bash /docker/bash/php/php7.3.sh \
-    ;; \
-  7.4) \
-    bash /docker/bash/php/php7.4.sh \
-    ;; \
-  8.0) \
-    bash /docker/bash/php/php8.0.sh \
-    ;; \
-  8.1) \
-    bash /docker/bash/php/php8.1.sh \
-    ;; \
-  8.2) \
-    bash /docker/bash/php/php8.2.sh \
-    ;; \
-  *) \
-    echo "Unsupported PHP version: $PHP_VERSION" \
-    exit 1 \
-    ;; \
-esac
+RUN if test -f /docker/bash/php/php$PHP_VERSION.sh; then bash /docker/bash/php/php$PHP_VERSION.sh; fi
 
 RUN if test -f /docker/bash/custom.sh; then bash /docker/bash/custom.sh; fi
 

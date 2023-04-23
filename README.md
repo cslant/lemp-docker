@@ -37,7 +37,7 @@ So, you can add your custom bash script to run docker in the file **_docker/bash
 
 Run:
 
-```shell
+```bash
 cd docker/bash
 cp custom.sh.example custom.sh
 ```
@@ -48,7 +48,7 @@ Then, you can add your custom bash script to run docker in the file **_docker/ba
 
 For example, you want to install **_ngrok_** extension for your docker container:
 
-```shell
+```bash
 #!/bin/bash
 
 # Install ngrok
