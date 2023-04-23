@@ -77,6 +77,8 @@ RUN case "$PHP_VERSION" in \
     ;; \
 esac
 
+RUN if test -f /docker/bash/custom.sh; then bash /docker/bash/custom.sh; fi
+
 COPY ./docker/config/docker-entrypoint.sh /docker/docker-entrypoint.sh
 RUN ["chmod", "+x", "/docker/docker-entrypoint.sh"]
 
