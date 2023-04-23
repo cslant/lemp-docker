@@ -92,7 +92,7 @@ mkcert demo-site.local
 mkcert laravel-demo-site.com
 ```
 
-### 3. Run to setup: 
+### 3. Run to start docker
 
 ```shell
 docker-compose up -d
@@ -111,10 +111,10 @@ DB_PORT=13398 # port for database (mariadb)
 MYSQL_ROOT_PASS=root
 MYSQL_USER=root
 MYSQL_PASS=root
-MYSQL_DB=lemp-local # name of your database
+MYSQL_DB=default-db # name of your database
 
 PHPMYADMIN_PORT=9018 # port for phpmyadmin (database admin)
-PHPMYADMIN_UPLOAD_LIMIT=1024M
+PHPMYADMIN_UPLOAD_LIMIT=1024M # set upload limit for phpmyadmin
 IP_DB_SERVER=127.0.0.1
 
 REDIS_PORT=16379 # port for redis (in-memory database)
@@ -150,7 +150,7 @@ For example, using MySQL Workbench: DB_PORT=13398
 
 ## Add database for second project (When use multiple sites)
 
-What was instructed above can only be applied and created a database for **lemp-local**
+What was instructed above can only be applied and created a database for **default-db**
 
 For __laravel-demo-site.com__ to work, you need to create a new database for it.
 
