@@ -106,7 +106,7 @@ PHP_VERSION_SELECTED=8.2 # choose PHP version for your project
 APP_NAME=lemp-stack # name of your docker project
 APP_PORT=91 # port for docker server (apache)
 SSL_PORT=448 # port for docker server (apache) with ssl
-DB_PORT=13398 # port for database (mariadb)
+DB_PORT=13393 # port for database (mariadb)
 
 MYSQL_ROOT_PASS=root
 MYSQL_USER=root
