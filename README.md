@@ -7,7 +7,8 @@ This configuration can be used for any PHP project (Laravel, Yii, CodeIgniter, P
 ## Table of Contents
 
  - [Configuration requirements](#configuration-requirements)
- - [Steps](#steps)
+ - [Add your custom bash script to run docker](#add-your-custom-bash-script-to-run-docker)
+ - [Installation and Setup](#installation-and-setup)
  - [Check the network ID and connect Database](#check-the-network-id-and-connect-database)
 
 
@@ -24,6 +25,46 @@ To use the fpm image, you need an additional web server, such as nginx, that can
 - In-memory database: **Redis**
 - SSL Certificate (using **mkcert**)
 
+## Add your custom bash script to run docker
+
+> **Because maybe my configuration is not enough to the configuration required by your project or purpose, you need to add more configuration to the docker.**
+
+With the nature of allowing to customize the PHP version according to you. We should also allow custom bash scripts to run when starting the docker.
+
+So, you can add your custom bash script to run docker in the file **_docker/bash/custom.sh_** with the following steps:
+
+### 1. Create a file **_docker/bash/custom.sh_**:
+
+Run:
+
+```shell
+cd docker/bash
+cp custom.sh.example custom.sh
+```
+
+### 2. Add your custom bash script to run docker
+
+Then, you can add your custom bash script to run docker in the file **_docker/bash/custom.sh_**.
+
+For example, you want to install **_ngrok_** extension for your docker container:
+
+```shell
+#!/bin/bash
+
+# Install ngrok
+snap install ngrok
+
+# Install ngrok for php
+docker-php-ext-install ngrok
+
+# You can install other extensions here
+# docker-php-ext-install <extension_name>
+
+# etc.
+npm install -g localtunnel
+```
+
+And now, just follow the steps below and run the docker.
 
 ## Installation and Setup
 

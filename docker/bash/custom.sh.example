@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# Add your bash script here...
+
+apt-get update
+php -v

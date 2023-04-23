@@ -3,6 +3,7 @@ sources/*.log
 docker/server/certs/*.pem
 docker/logs/nginx/*.log
 docker/logs/db/*.log
+docker/bash/custom.sh
 .vscode
 .DS_Store
 .env
