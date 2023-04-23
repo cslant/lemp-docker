@@ -31,36 +31,6 @@ RUN install-php-extensions gd pdo_mysql bcmath zip intl opcache mbstring exif pc
 
 RUN docker-php-ext-install mysqli pdo pdo_mysql && docker-php-ext-enable mysqli
 
-RUN case "$PHP_VERSION" in \
-  7.1) \
-    pecl install -o xdebug-2.6.1 \
-    ;; \
-  7.2) \
-    pecl install -o xdebug-2.9.8 \
-    ;; \
-  7.3) \
-    pecl install -o xdebug-2.9.8 \
-    ;; \
-  7.4) \
-    pecl install -o xdebug-2.9.8 \
-    ;; \
-  8.0) \
-    pecl install -o xdebug-3.0.4 \
-    ;; \
-  8.1) \
-    pecl install -o xdebug-3.1.0 \
-    ;; \
-  8.2) \
-    pecl install -o xdebug-3.2.0 \
-    ;; \
-  *) \
-    echo "Unsupported PHP version: $PHP_VERSION" \
-    exit 1 \
-    ;; \
-esac
-
-RUN docker-php-ext-enable xdebug
-
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
     && apt-get install -y nodejs \
     && npm install -g n \
@@ -75,6 +45,37 @@ RUN ACCEPT_EULA=Y apt-get -y --no-install-recommends install msodbcsql17 unixodb
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 COPY --from=composer/composer /usr/bin/composer /usr/local/bin/composer
+
+COPY ./docker/bash /docker/bash
+RUN chmod 755 /docker/bash
+
+RUN case "$PHP_VERSION" in \
+  7.1) \
+    bash /docker/bash/php7.1.sh \
+    ;; \
+  7.2) \
+    bash /docker/bash/php7.2.sh \
+    ;; \
+  7.3) \
+    bash /docker/bash/php7.3.sh \
+    ;; \
+  7.4) \
+    bash /docker/bash/php7.4.sh \
+    ;; \
+  8.0) \
+    bash /docker/bash/php8.0.sh \
+    ;; \
+  8.1) \
+    bash /docker/bash/php8.1.sh \
+    ;; \
+  8.2) \
+    bash /docker/bash/php8.2.sh \
+    ;; \
+  *) \
+    echo "Unsupported PHP version: $PHP_VERSION" \
+    exit 1 \
+    ;; \
+esac
 
 COPY ./docker/config/docker-entrypoint.sh /docker/docker-entrypoint.sh
 RUN ["chmod", "+x", "/docker/docker-entrypoint.sh"]

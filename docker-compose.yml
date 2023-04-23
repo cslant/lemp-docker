@@ -70,7 +70,7 @@ services:
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
-    container_name: phpmyadmin_${APP_NAME}
+    container_name: ${APP_NAME}-phpmyadmin
     restart: always
     ports:
       - '${PHPMYADMIN_PORT}:${APP_PORT}'
@@ -82,7 +82,7 @@ services:
 
   redis:
     image: redis
-    container_name: redis_${APP_NAME}
+    container_name: ${APP_NAME}-redis
     hostname: redis
     restart: 'on-failure'
     ports:
