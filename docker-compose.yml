@@ -10,9 +10,9 @@ services:
       context: .
       dockerfile: ./docker/Dockerfile
       args:
-          - PHP_VERSION_SELECTED=${PHP_VERSION_SELECTED}
-          - PHP_VERSION=${PHP_VERSION_SELECTED}
-    container_name: '${APP_NAME}-server'
+          - PHP_VERSION_SELECTED=${PHP_VERSION_SELECTED:-8.2}
+          - PHP_VERSION=${PHP_VERSION_SELECTED:-8.2}
+    container_name: '${APP_NAME:-lemp_app}-server'
     working_dir: /var/www/
     volumes:
       - ./sources:/var/www
@@ -24,11 +24,11 @@ services:
   #nginx service
   nginx:
     image: nginx:alpine
-    container_name: '${APP_NAME}-nginx'
+    container_name: '${APP_NAME:-lemp_app}-nginx'
     tty: true
     ports:
-      - '${APP_PORT}:80'
-      - '${SSL_PORT}:443'
+      - '${APP_PORT:-801}:80'
+      - '${SSL_PORT:-1443}:443'
     volumes:
       - ./sources:/var/www
       - ./docker/config/conf.d/:/etc/nginx/conf.d/
@@ -36,7 +36,7 @@ services:
       - ./docker/server/certs:/var/www/certs/
       - ./docker/config/nginx.conf:/etc/nginx/nginx.conf
     environment:
-      - 'DATABASE_URL=mysql://${MYSQL_USER}:${MYSQL_PASS}@db_server:3306/${MYSQL_DB}'
+      - 'DATABASE_URL=mysql://${MYSQL_USER:-root}:${MYSQL_PASS:-root}@db_server:3306/${MYSQL_DB:-lamp_local_db}'
     depends_on:
       - server
       - db_server
@@ -46,23 +46,23 @@ services:
   #DB service
   db_server:
     image: mariadb
-    container_name: '${APP_NAME}-db'
+    container_name: '${APP_NAME:-lemp_app}-db'
     command: --default-authentication-plugin=mysql_native_password
     restart: 'always'
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: 'false'
-      MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASS}'
-      MYSQL_USER: '${MYSQL_USER}'
-      MYSQL_PASSWORD: '${MYSQL_PASS}'
-      MYSQL_DATABASE: '${MYSQL_DB}'
+      MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASS:-root}'
+      MYSQL_USER: '${MYSQL_USER:-root}'
+      MYSQL_PASSWORD: '${MYSQL_PASS:-root}'
+      MYSQL_DATABASE: '${MYSQL_DB:-lemp_local_db}'
     volumes:
       - db_data:/var/lib/mysql
       - ./docker/db/mariadb/my.cnf:/etc/mysql/conf.d/mysql.cnf
       - ./docker/logs/db/query.log:/var/log/query.log
     ports:
-      - '${DB_PORT}:3306'
+      - '${DB_PORT:-13006}:3306'
     healthcheck:
-      test: mysqladmin ping -h ${IP_DB_SERVER} -u root --password=$$MYSQL_ROOT_PASSWORD
+      test: mysqladmin ping -h ${IP_DB_SERVER:-127.0.0.1} -u root --password=${MYSQL_ROOT_PASS:-root}
       interval: 5s
       retries: 5
     networks:
@@ -70,23 +70,23 @@ services:
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
-    container_name: ${APP_NAME}-phpmyadmin
+    container_name: ${APP_NAME:-lemp_app}-phpmyadmin
     restart: always
     ports:
-      - '${PHPMYADMIN_PORT}:${APP_PORT}'
+      - '${PHPMYADMIN_PORT:-9012}:${APP_PORT:-801}'
     environment:
       PMA_HOST: db_server
-      UPLOAD_LIMIT: ${PHPMYADMIN_UPLOAD_LIMIT}
+      UPLOAD_LIMIT: ${PHPMYADMIN_UPLOAD_LIMIT:-1024M}
     networks:
       - nginx
 
   redis:
     image: redis
-    container_name: ${APP_NAME}-redis
+    container_name: ${APP_NAME:-lemp_app}-redis
     hostname: redis
     restart: 'on-failure'
     ports:
-      - '${REDIS_PORT}:6379'
+      - '${REDIS_PORT:-16379}:6379'
     networks:
       - nginx
 
