@@ -4,6 +4,8 @@
 
 This configuration can be used for any PHP project (Laravel, Yii, CodeIgniter, Pure PHP, etc.) :tada:
 
+[![Docker](https://github.com/tanhongit/lemp-docker/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/tanhongit/lemp-docker/actions/workflows/docker-publish.yml)
+
 ## Table of Contents
 
  - [Configuration requirements](#configuration-requirements)
