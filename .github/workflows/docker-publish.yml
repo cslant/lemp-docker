@@ -38,7 +38,6 @@ jobs:
       - name: Build and push Docker image
         id: build-and-push
         uses: docker/build-push-action@ac9327eae2b366085ac7f6a2d02df8aa8ead720a
-        working-directory: docker
         with:
           context: .
           push: ${{ github.event_name != 'pull_request' }}
@@ -46,3 +45,4 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          workdir: ./docker
