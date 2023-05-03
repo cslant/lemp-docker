@@ -2,7 +2,7 @@ ARG PHP_VERSION_SELECTED=8.2
 
 FROM php:${PHP_VERSION_SELECTED}-fpm
 
-ARG PHP_VERSION
+ARG PHP_VERSION=8.2
 
 RUN apt-get update && apt-get install -y git unzip zip nano
 
@@ -31,7 +31,7 @@ RUN install-php-extensions gd pdo_mysql bcmath zip intl opcache mbstring exif pc
 
 RUN docker-php-ext-install mysqli pdo pdo_mysql && docker-php-ext-enable mysqli
 
-RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
+RUN curl -sL https://deb.nodesource.com/setup_18.x | bash - \
     && apt-get install -y nodejs \
     && npm install -g n \
     && n stable
