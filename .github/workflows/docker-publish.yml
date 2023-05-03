@@ -6,11 +6,6 @@ on:
   pull_request:
     branches: [ "main" ]
 
-env:
-  REGISTRY: lbiltech
-  IMAGE_NAME: lemp
-
-
 jobs:
   push_to_registry:
     name: LEMP Docker Image to Hub
@@ -33,7 +28,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: ${{ secrets.REGISTRY }}/${{ secrets.IMAGE_NAME }}
 
       - name: Build and push Docker image
         id: build-and-push
