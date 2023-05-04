@@ -6,6 +6,12 @@ on:
   pull_request:
     branches: [ "main" ]
 
+env:
+  DOCKER_ID: ${{ secrets.DOCKER_ID }}
+  IMAGE_NAME: lemp
+  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
 jobs:
   push_to_registry:
     name: LEMP Docker Image to Hub
@@ -20,14 +26,14 @@ jobs:
       - name: Log into Docker Hub
         uses: docker/login-action@28218f9b04b4f3f62068d7b6ce6ca5b26e35336c
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          username: ${{ env.DOCKER_USERNAME }}
+          password: ${{ env.DOCKER_PASSWORD }}
 
       - name: Extract Docker metadata
         id: meta
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
         with:
-          images: ${{ secrets.DOCKER_ID }}/${{ secrets.IMAGE_NAME }}
+          images: ${{ env.DOCKER_ID }}/${{ env.IMAGE_NAME }}
 
       - name: Build and push Docker image
         id: build-and-push
