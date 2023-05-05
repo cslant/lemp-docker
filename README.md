@@ -4,7 +4,7 @@
 
 This configuration can be used for any PHP project (Laravel, Yii, CodeIgniter, Pure PHP, etc.) :tada:
 
-[![Docker](https://github.com/tanhongit/lemp-docker/actions/workflows/docker-publish.yml/badge.svg)](https://hub.docker.com/r/lbiltech/lemp)
+[![Docker](https://github.com/lbiltech/lemp-docker/actions/workflows/docker-publish.yml/badge.svg)](https://hub.docker.com/r/lbiltech/lemp)
 
 ## Table of Contents
 
