@@ -28,7 +28,7 @@ if [[ "$UPDATE_UID_GID" = "true" ]]; then
 fi
 
 chown www-data:www-data /var/www
-chmod 777 /var/www
+chmod 755 /var/www
 
 [ "$PHP_ENABLE_XDEBUG" = "true" ] && \
     docker-php-ext-enable xdebug && \
