@@ -14,11 +14,11 @@ This configuration can be used for any PHP project (Laravel, Yii, CodeIgniter, P
  - [Check the network ID and connect Database](#check-the-network-id-and-connect-database)
 
 
-> Other docker config: [LAMP Stack (Apache, PHP, MariaDB, Redis)](https://github.com/tanhongit/lamp-docker.git) :whale:
+> Other docker configs: [LAMP Stack (Apache, PHP, MariaDB, Redis)](https://github.com/tanhongit/lamp-docker.git) :whale:
 
 ## Configuration requirements
 
-To use the fpm image, you need an additional web server, such as nginx, that can proxy http-request to the fpm-port of the container. For fpm connection this container exposes port 9000.
+To use the fpm image, you need an additional web server, such as Nginx, that can proxy HTTP-request to the fpm-port of the container. For fpm connection, this container exposes port 9000.
 
 - **Multi-site integration**
 - **PHP optional version with custom in .env file** (example: 7.4, 8.0, 8.1, 8.2, etc.)
@@ -27,11 +27,11 @@ To use the fpm image, you need an additional web server, such as nginx, that can
 - In-memory database: **Redis**
 - SSL Certificate (using **mkcert**)
 
-## Add your custom bash script to run docker
+## Add your custom bash script to run the docker
 
-> **Because maybe my configuration is not enough to the configuration required by your project or purpose, you need to add more configuration to the docker.**
+> **Because maybe my configuration is not enough for the configuration required by your project or purpose, you need to add more configuration to the docker.**
 
-With the nature of allowing to customize the PHP version according to you. We should also allow custom bash scripts to run when starting the docker.
+With nature of allowing you to customize the PHP version according to your. We should also allow custom bash scripts to run when starting the docker.
 
 So, you can add your custom bash script to run docker in the file **_docker/bash/custom.sh_** with the following steps:
 
@@ -44,7 +44,7 @@ cd docker/bash
 cp custom.sh.example custom.sh
 ```
 
-### 2. Add your custom bash script to run docker
+### 2. Add your custom bash script to run the docker
 
 Then, you can add your custom bash script to run docker in the file **_docker/bash/custom.sh_**.
 
@@ -70,9 +70,9 @@ And now, just follow the steps below and run the docker.
 
 ## Installation and Setup
 
-> **Warning**: If you don't want to use SSL, you can skip step 1 and 2 and edit conf files in _**docker/config/conf.d/*.conf**_ to remove the SSL configuration.
+> **Warning**: If you don't want to use SSL, you can skip steps 1 and 2 and edit conf files in _**docker/config/conf.d/*.conf**_ to remove the SSL configuration.
 
-Please remove 443 port in _**docker/config/conf.d/*.conf**_ file and use 80 port for http:
+Please remove the 443 port in _**docker/config/conf.d/*.conf**_ file and use 80 port for HTTP:
 
 ```nginx
 server {
@@ -100,7 +100,7 @@ server {
 
 If you want to use SSL, please ignore the above warning and follow all the steps below.
 
-### 1. Install ssl certificate
+### 1. Install SSL certificate
 
 Using mkcert to create ssl certificate
 
@@ -125,7 +125,7 @@ Now that the mkcert utility is installed, run the command below to generate and 
 mkcert -install
 ```
 
-### 2. Create ssl certificate for this project
+### 2. Create an SSL certificate for this project
 
 Run:
 
@@ -135,21 +135,21 @@ mkcert demo-site.local
 mkcert laravel-demo-site.com
 ```
 
-### 3. Run to start docker
+### 3. Run to start the docker
 
 ```shell
 docker-compose up -d
 ```
 
-### 4. Modify **.env** on laravel source
+### 4. Modify **.env** on the Laravel source
 
 ```dotenv
-PHP_VERSION_SELECTED=8.2 # choose PHP version for your project
+PHP_VERSION_SELECTED=8.2 # Choose the PHP version for your project
 
 APP_NAME=lemp-stack # name of your docker project
 APP_PORT=91 # port for docker server (apache)
-SSL_PORT=448 # port for docker server (apache) with ssl
-DB_PORT=13393 # port for database (mariadb)
+SSL_PORT=448 # port for docker server (apache) with SSL
+DB_PORT=13393 # port for the database (MariaDB)
 
 MYSQL_ROOT_PASS=root
 MYSQL_USER=root
@@ -160,10 +160,10 @@ PHPMYADMIN_PORT=9018 # port for phpmyadmin (database admin)
 PHPMYADMIN_UPLOAD_LIMIT=1024M # set upload limit for phpmyadmin
 IP_DB_SERVER=127.0.0.1
 
-REDIS_PORT=16379 # port for redis (in-memory database)
+REDIS_PORT=16379 # port for Redis (in-memory database)
 ```
 
-## Check the network ID and connect Database
+## Check the network ID and connect the Database
 
 ### 1. Check CONTAINER ID
 - Run `docker ps` to check the Container ID of **APP_NAME-db**
@@ -182,7 +182,7 @@ Use the IP address to connect to the database using the database management syst
 
 ![image](https://user-images.githubusercontent.com/35853002/232210044-7dd5aafa-352f-45d8-ba99-82cb792b1066.png)
 
-You can also connect to the database using the DB_PORT in .env file
+You can also connect to the database using the DB_PORT in the .env file
 
 For example, using MySQL Workbench: DB_PORT=13398
 
@@ -191,13 +191,13 @@ For example, using MySQL Workbench: DB_PORT=13398
 ## This is the demo of the result:
 ![image](https://user-images.githubusercontent.com/35853002/183320614-fa670785-9aa7-411a-a1ff-15e349cee58d.png)
 
-## Add database for second project (When use multiple sites)
+## Add database for the second project (When using multiple sites)
 
 What was instructed above can only be applied and created a database for **default-db**
 
 For __laravel-demo-site.com__ to work, you need to create a new database for it.
 
-Please add new database for laravel-demo-site.com with the __phpmyadmin__ tool or any other tool you like. And then, please update __DB_HOST__ on __.env__ file to the new database of __laravel-demo__ source.
+Please add a new database for laravel-demo-site.com with the __phpmyadmin__ tool or any other tool you like. And then, please update __DB_HOST__ on __.env__ file to the new database of __laravel-demo__ source.
 
 Example: This configuration in **laravel-demo** source
 
@@ -205,7 +205,7 @@ Example: This configuration in **laravel-demo** source
 DB_CONNECTION=mysql
 DB_HOST=172.21.0.3 # IP address of APP_NAME-db
 DB_PORT=3306
-DB_DATABASE=laravel_demo # name of database
+DB_DATABASE=laravel_demo # name of the database
 DB_USERNAME=root
 DB_PASSWORD=root
 ```
