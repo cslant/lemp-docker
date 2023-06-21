@@ -13,9 +13,21 @@ env:
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
 jobs:
+  shellcheck:
+    name: Shellcheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run ShellCheck
+        uses: ludeeus/action-shellcheck@master
+        with:
+          ignore_paths: >-
+            sources
+
   push_to_registry:
     if: github.event_name != 'pull_request'
     name: LEMP Docker Image to Hub
+    needs: shellcheck
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
